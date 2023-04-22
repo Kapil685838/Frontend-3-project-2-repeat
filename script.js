@@ -15,6 +15,8 @@ function getLocation() {
 }
 
 function showPosition(position){
+    document.getElementById('fetchData').style.display = "none";
+    document.getElementById('main-body').style.display = "block";
     currPosition.lat = position.coords.latitude;
     currPosition.long = position.coords.longitude;
     latArr.forEach((ele) => {
@@ -45,12 +47,18 @@ function fetchWeatherData(latitude, longitude) {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        // Handle weather data here
+        // console.log(data);
+        // document.getElementById('location').innerHTML = "Location: " + data.location;
+        document.getElementById('timeZone').innerHTML = "TimeZone: " + data.timezone;
+        document.getElementById('windSpeed').innerHTML = "Wind Speed: " + data.current.wind_speed;
+        document.getElementById('pressure').innerHTML = "Pressure: " + data.current.pressure;
+        document.getElementById('humidity').innerHTML = "Humidity: " + data.current.humidity;
+        document.getElementById('windDirection').innerHTML = "Wind Direction: " + data.current.wind_deg;
+        document.getElementById('uvIndex').innerHTML = "UV Index: " + data.current.uvi;
+        document.getElementById('feelsLike').innerHTML = "Feels Like: " + data.current.feels_like;
       })
       .catch(error => {
         console.log(error);
-        // Handle error here
       });
   }
 

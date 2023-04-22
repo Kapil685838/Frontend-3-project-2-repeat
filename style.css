@@ -29,7 +29,9 @@ body {
 .header > button {
     padding: 0.5rem 4rem;
 }
-
+#main-body {
+    display: none;
+}
 .map-location {
     display: flex;
     flex-direction: column;
