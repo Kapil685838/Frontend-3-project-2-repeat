@@ -1,4 +1,6 @@
-const openWeatherKeyName = "283f5b61a999291d2471a6db61bf2b31";
+const fetchDataButton = document.getElementById("fetchData");
+
+const openWeatherKeyName = "509f664697a905dd6c4cf632844aeee0";
 
 let latArr = document.querySelectorAll('.lat');
 let longArr = document.querySelectorAll('.long');
@@ -43,26 +45,32 @@ function displayMap(latitude, longitude) {
 }
 
 function fetchWeatherData(latitude, longitude) {
-    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,daily&appid=${openWeatherKeyName}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${openWeatherKeyName}`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        // console.log(data);
-        // document.getElementById('location').innerHTML = "Location: " + data.location;
+        console.log(data);
+        document.getElementById('location').innerHTML = "Location: " + data.name + " " + data.sys.country;
         document.getElementById('timeZone').innerHTML = "TimeZone: " + data.timezone;
-        document.getElementById('windSpeed').innerHTML = "Wind Speed: " + data.current.wind_speed;
-        document.getElementById('pressure').innerHTML = "Pressure: " + data.current.pressure;
-        document.getElementById('humidity').innerHTML = "Humidity: " + data.current.humidity;
-        document.getElementById('windDirection').innerHTML = "Wind Direction: " + data.current.wind_deg;
-        document.getElementById('uvIndex').innerHTML = "UV Index: " + data.current.uvi;
-        document.getElementById('feelsLike').innerHTML = "Feels Like: " + data.current.feels_like;
+        document.getElementById('windSpeed').innerHTML = "Wind Speed: " + data.wind.speed;
+        document.getElementById('pressure').innerHTML = "Pressure: " + data.main.pressure;
+        document.getElementById('humidity').innerHTML = "Humidity: " + data.main.humidity;
+        document.getElementById('windDirection').innerHTML = "Wind Direction: " + data.wind.deg + " deg";
+        document.getElementById('uvIndex').innerHTML = "UV Index: " + data.weather[0].description;
+        document.getElementById('feelsLike').innerHTML = "Feels Like: " + data.main.feels_like;
       })
       .catch(error => {
         console.log(error);
       });
   }
 
-document.getElementById("fetchData").addEventListener("click", getLocation);
+// document.getElementById("fetchData").addEventListener("click", getLocation);
+
+fetchDataButton.addEventListener("click", event => {
+    // Hide the fetch data button and show the data container
+    event.preventDefault();
+    getLocation();
+});
 
 
 // https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=c58308e4490aa1325e2b6aba3a805e31
